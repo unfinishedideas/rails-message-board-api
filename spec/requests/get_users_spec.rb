@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-describe "get all groups route", :type => :request do
+describe "get all users route", :type => :request do
   before(:each) do
-    Group.destroy_all
+    User.destroy_all
   end
+  
+  let!(:users) { FactoryBot.create_list(:user, 10)}
 
-  let!(:groups) { FactoryBot.create_list(:group, 10)}
+  before { get '/users'}
 
-  before { get '/groups'}
-
-  it 'returns all groups' do
+  it 'returns all users' do
     expect(JSON.parse(response.body).size).to eq(10)
   end
 
