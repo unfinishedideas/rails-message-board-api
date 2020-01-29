@@ -1,0 +1,57 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/groups":
+    post:
+      summary: Creates a group
+      tags:
+      - Message Board
+      consumes:
+      - application/json
+      - application/xml
+      parameters:
+      - name: group
+        in: body
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+          required:
+          - name
+      responses:
+        '201':
+          description: pet created
+        '422':
+          description: invalid request
+  "/groups/{:id}":
+    get:
+      summary: Retrieves a group
+      tags:
+      - Message Board
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+      responses:
+        '200':
+          description: name found
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+            required:
+            - id
+            - name
+        '404':
+          description: pet not found
