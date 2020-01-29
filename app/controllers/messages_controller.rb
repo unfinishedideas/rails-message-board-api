@@ -1,7 +1,15 @@
+require 'pry'
+
 class MessagesController < ApplicationController
 
   def index
-    @messages = Message.all
+    # if params[:group_id]
+    #   @group = Group.find(params[:group_id])
+    # else if params[:user_id]
+    #   @user = User.find(params[:user_id])
+    # end
+    @group = Group.find(params[:group_id])
+    @messages = @group.messages
     json_response(@messages)
   end
 

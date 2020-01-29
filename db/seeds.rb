@@ -5,9 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'pry'
 class Seed
 
  def self.begin
+   User.destroy_all
+   Group.destroy_all
+   Message.destroy_all
    seed = Seed.new
    seed.generate_groups
    seed.generate_users
@@ -31,12 +35,22 @@ class Seed
    groups = Group.all
 
    30.times do |i|
-     message = Message.create!(
-       title: Faker::Marketing.buzzwords,
-       content: Faker::Movies::Lebowski.quote,
-       user_id: users.sample.id,
-       group_id: groups.sample.id
-     )
+     group = groups.sample
+     user = users.sample
+     message = Message.create!({
+       :title => Faker::Marketing.buzzwords,
+       :content => Faker::Movies::Lebowski.quote,
+         :user_id => user.id,
+         :group_id => group.id
+     })
+     # message = group.messages.new({
+     #   :title => Faker::Marketing.buzzwords,
+     #   :content => Faker::Movies::Lebowski.quote,
+     #   :user_id => users.sample.id,
+     #   :group_id => group.id
+     # })
+     message.save()
+
    end
  end
 
